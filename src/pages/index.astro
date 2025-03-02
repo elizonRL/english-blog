@@ -1,11 +1,20 @@
 ---
 import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import "../styles/global.css";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	<Welcome />
+	<header class="flex flex-col items-center pt-36 ">
+		<h1 class="text-3xl font-semibold text-center">
+			Welcome to learn <span class="text-transparent font-bold bg-clip-text bg-gradient-to-l from-cyan-500 to-sky-500 ">English Blogs</span>!
+		</h1>
+		<p class="p-5 font-semibold">In this blog you can refresh you knologe about the level </p>
+	</header>
+	<main class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
+		
+	</main>
 </Layout>
