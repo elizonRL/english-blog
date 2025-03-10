@@ -1,35 +1,51 @@
 ---
-import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+
+const { title } = Astro.props;
 ---
+
 <!doctype html>
-<html lang="en">
+<html lang='en'>
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/logo-English.png" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Learn English</title>
+		<meta charset='UTF-8' />
+		<meta
+			name='viewport'
+			content='width=device-width'
+		/>
+		<link
+			rel='icon'
+			type='image/svg+xml'
+			href='/logo-English.png'
+		/>
+		<meta
+			name='generator'
+			content={Astro.generator}
+		/>
+		<title>{title}</title>
+		<ClientRouter />
 	</head>
 	<body>
-		<div class="absolute inset-0 h-full w-full bg-[#0a0a0a]">
-			<div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:24px_24px]">
-				<slot />
-				</div>
-			</div>
+		<div>
+			<slot />
+		</div>
 	</body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		color: white;
-		@apply grid place-content-center;
+	@import 'tailwindcss';
+	@plugin "@tailwindcss/typography";
+	html {
+		font-family: system-ui, sans-serif;
+		background: #13151a;
+		color: #fff;
+		@apply bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:24px_24px];
 	}
 
-	body > div {
+	body {
+		@apply grid place-content-center p-20;
+	}
+
+	body div {
 		@apply container;
 	}
 </style>

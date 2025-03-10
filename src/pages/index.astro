@@ -4,52 +4,61 @@ import Layout from '../layouts/Layout.astro';
 import '../styles/global.css';
 
 const post = await getCollection('post');
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<header class='flex flex-col items-center pt-36'>
-		<h1 class='text-3xl font-semibold text-center drop-shadow-md'>
-			Welcome to learn <span
-				class='text-transparent font-bold bg-clip-text bg-gradient-to-l from-cyan-500 to-sky-500'
-				>English Blogs</span
-			>!
-		</h1>
-		<p class='p-5 font-semibold'>
-			In this blog you can refresh you knologe about the level
-		</p>
-	</header>
-	<main>
-		<section class='px-4 mx-auto max-w-screen-xl'>
-			<h2 class='text-2xl font-bold text-white'>Latest Posts</h2>
-			<div class='grid gap-6 md:grid-cols-2'>
-				{
-
-					post.map((post) => {
-						const { slug, data } = post;
-						const { title, description, img } = data;
-						return (
-							<article class='flex'>
-								<a class="mb-2 xl:mb-0 transition hover:scale-110" href={`/post/${slug}`}>
-									<img
-										class='mr-5 rounded '
-										src={`/${img}`}
-										alt={title}
-									/>
-								</a>
-								<div class="flex flex-col justify-center">
-									<h2 class="mb-2 text-2xl font-bold leading-tight text-white">
-										{title}
-									</h2>
-									<p>{description}</p>
-								</div>
-							</article>
-						);
-					})
-				}
-			</div>
-		</section>
-	</main>
+<Layout title='Learn English'>
+    <header class='flex flex-col items-center pt-10'>
+        <h1 class='text-7xl font-semibold text-center drop-shadow-md'>
+            Welcome to learn <span
+                class='text-transparent font-bold bg-clip-text bg-gradient-to-l from-cyan-500 to-sky-500'
+                >English Blogs</span
+            >!
+        </h1>
+        <p class='p-5 font-semibold text-center'>
+            In this blog you can refresh your knowledge about the level
+        </p>
+    </header>
+    <main>
+        <section>
+            <h2 class='text-2xl font-bold text-white mb-6'>Latest Posts</h2>
+            <div class='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+                {
+                    post.map((post) => {
+                        const { slug, data } = post;
+                        const { title, description, img, tags } = data;
+                        return (
+                            <article class='flex flex-col rounded-lg shadow-lg overflow-hidden'>
+                                <a href={`/post/${slug}`}>
+                                    <img
+                                        class='w-full h-48 object-scale-down object-center'
+                                        src={`/${img}`}
+                                        alt={title}
+                                        transition:name={`img-${slug}`}
+                                    />
+                                    <div class='p-6 flex flex-col justify-center items-center'>
+                                        <h2
+                                            class='text-2xl md:text-4xl font-bold text-white mb-2'
+                                            transition:name={`title-${slug}`}
+                                        >
+                                            {title}
+                                        </h2>
+                                        <div class='flex flex-wrap gap-2 mb-4'>
+                                            {tags.map((tag: any) => (
+                                                <span class='bg-blue-500 text-white px-3 py-1 rounded-full text-sm'>
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <p class='text-gray-300 line-clamp-3 md:line-clamp-none'>
+                                            {description}
+                                        </p>
+                                    </div>
+                                </a>
+                            </article>
+                        );
+                    })
+                }
+            </div>
+        </section>
+    </main>
 </Layout>
