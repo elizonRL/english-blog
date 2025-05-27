@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@theme{
+    --color-squirtle: #8db5ac;
+    --color-squirtle-light: #20444c;
+    --color-squirtle-dark: #ba681c
+}
