@@ -63,11 +63,12 @@ const post = await getCollection('post');
         <section class='w-full h-100'>
             <h2 class='text-2xl font-bold text-white mb-6'>Idioms</h2>
             <div class='h-90 w-full grid grid-cols-5 grid-rows-5 gap-4 p-1.5'>
-                <div class='bg-squirtle rounded-3xl col-span-2 row-span-5 text-center items-center flex justify-center trasition duration-300 ease-in-out hover:scale-105 hover:translate-y-1-'>
-                    <span class='text-7xl inline-block font-bold rotate-6 text-black'
+                <div class='group bg-squirtle rounded-3xl col-span-2 row-span-5 text-center items-center flex justify-center trasition duration-300 ease-in-out hover:scale-105 hover:translate-y-1-'>
+                    <span class='text-7xl inline-block font-bold rotate-6 text-black group-hover:invisible ease-in-out duration-300'
                         >Hit the nail on the head</span>
+                    <p class="invisible group-hover:visible">means: </p>
                 </div>
-                <div class='bg-squirtle-dark col-span-2 rounded-2xl row-span-3 col-start-3 p-1 text-center items-center flex justify-center'>
+                <div class='bg-squirtle-dark col-span-2 rounded-2xl row-span-3 col-start-3 p-1 text-center items-center flex justify-center group-hover:invisible'>
                     <span class='text-7xl inline-block font-bold rotate-6 text-black'
                         >break a leg</span>
                 </div>
