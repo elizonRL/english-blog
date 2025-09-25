@@ -85,3 +85,41 @@ Complete the following sentences with the correct form of the verb:
 3.  don't come
 4.  were
 5.  hurry
+
+## Final Quiz
+
+<div id="quiz1" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz1', 
+        "Which conditional is used for real and possible future situations?",
+        ["First conditional", "Second conditional", "Third conditional", "Zero conditional"],
+        0,
+        "The first conditional uses 'If + present simple, will + infinitive' for real and possible future situations."
+    );
+});
+</script>
+
+<div id="quiz2" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz2', 
+        "Complete: 'If I _____ rich, I would travel the world.'",
+        ["am", "was", "were", "will be"],
+        2,
+        "Second conditional uses 'were' for all subjects in formal English when expressing hypothetical situations."
+    );
+});
+</script>
+
+<div id="quiz3" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz3', 
+        "Which sentence is a correct first conditional?",
+        ["If it will rain, I stay home.", "If it rains, I will stay home.", "If it rained, I would stay home.", "If it had rained, I would have stayed home."],
+        1,
+        "First conditional structure: If + present simple, will + infinitive."
+    );
+});
+</script>

@@ -1,5 +1,5 @@
 ---
-title: Mdals verbs
+title: Modal verbs
 img: modal-verbs.png
 description: Modal verbs like must, can't, might, and could express obligation, impossibility, possibility, or ability. For example, "You must study" shows obligation, "It can't be true" shows impossibility, "It might rain" shows uncertainty, and "She could help" suggests possibility or past ability.
 tags: ["Modal Verbs"]
@@ -54,5 +54,43 @@ Modal verbs are auxiliary verbs that express a range of meanings, including poss
 * Modal verbs add extra meaning to the main verb.
 
 ## Practice
+
+*Press "Take Quiz" button in the sidebar to show the quiz*
+
+<div id="quiz1" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz1', 
+        "Which modal verb expresses strong obligation?",
+        ["might", "could", "must", "can't"],
+        2,
+        "'Must' expresses strong obligation or necessity, as in 'You must wear a seatbelt.'"
+    );
+});
+</script>
+
+<div id="quiz2" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz2', 
+        "Complete the sentence: 'It ___ rain tomorrow, so bring an umbrella.'",
+        ["must", "can't", "might", "couldn't"],
+        2,
+        "'Might' is used to express possibility or uncertainty about future events."
+    );
+});
+</script>
+
+<div id="quiz3" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz3', 
+        "Which sentence shows impossibility?",
+        ["She could speak French.", "That can't be true.", "I might go later.", "You must be careful."],
+        1,
+        "'Can't' expresses impossibility or strong disbelief about something."
+    );
+});
+</script>
 
 Try creating your own sentences using these modal verbs. Think about different situations and how you can express possibility, ability, obligation, and deduction.

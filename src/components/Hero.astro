@@ -1,0 +1,71 @@
+---
+// Hero component for the main page
+---
+
+<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+    <!-- Background elements -->
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-purple-900/10 to-cyan-900/10"></div>
+    
+    <!-- Subtle floating elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    </div>
+
+    <div class="container mx-auto px-6 text-center relative z-10">
+        <div class="max-w-5xl mx-auto">
+            <!-- Main heading -->
+            <div class="mb-8">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+                    Learn 
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400">
+                        English
+                    </span>
+                    <br class="hidden md:block" />
+                    <span class="text-white">Easily</span>
+                </h1>
+            </div>
+            
+            <!-- Description -->
+            <div class="mb-12">
+                <p class="text-xl md:text-2xl text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Master grammar, expand vocabulary, and speak with confidence through our interactive lessons and practical examples.
+                </p>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="mb-16">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a 
+                        href="#posts" 
+                        class="px-10 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl text-lg"
+                    >
+                        Start Learning Now
+                    </a>
+                    <a 
+                        href="#idioms" 
+                        class="px-10 py-4 border-2 border-gray-300 text-gray-200 hover:bg-gray-300 hover:text-gray-900 font-semibold rounded-full transition-all duration-300 text-lg"
+                    >
+                        Explore Idioms
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stats section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-600/30">
+                <div class="text-4xl font-bold text-blue-400 mb-2">5+</div>
+                <div class="text-gray-200 font-medium">Grammar Topics</div>
+            </div>
+            <div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-600/30">
+                <div class="text-4xl font-bold text-purple-400 mb-2">100+</div>
+                <div class="text-gray-200 font-medium">Practice Examples</div>
+            </div>
+            <div class="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-600/30">
+                <div class="text-4xl font-bold text-cyan-400 mb-2">∞</div>
+                <div class="text-gray-200 font-medium">Learning Opportunities</div>
+            </div>
+        </div>
+    </div>
+</section>

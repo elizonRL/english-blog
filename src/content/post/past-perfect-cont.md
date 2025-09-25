@@ -66,3 +66,41 @@ Some common signal words used with the Past Perfect Continuous include:
 * The Past Perfect Continuous emphasizes the duration of an action.
 * It is used to connect two actions in the past, where one action was ongoing before the other.
 * It is also used to show the cause of something in the past.
+
+## Final Quiz
+
+<div id="quiz1" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz1', 
+        "What is the structure of Past Perfect Continuous?",
+        ["had + past participle", "had been + verb-ing", "have been + verb-ing", "was/were + verb-ing"],
+        1,
+        "Past Perfect Continuous uses 'had been + verb-ing' to show ongoing actions before another past action."
+    );
+});
+</script>
+
+<div id="quiz2" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz2', 
+        "Complete: 'She was tired because she _____ all night.'",
+        ["had worked", "had been working", "was working", "has been working"],
+        1,
+        "'Had been working' shows the ongoing action that caused her tiredness."
+    );
+});
+</script>
+
+<div id="quiz3" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz3', 
+        "Past Perfect Continuous emphasizes:",
+        ["Completed actions", "Duration of ongoing actions", "Future actions", "Habitual actions"],
+        1,
+        "Past Perfect Continuous emphasizes the duration and continuity of actions that were ongoing before another past event."
+    );
+});
+</script>

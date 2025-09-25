@@ -1,88 +1,185 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import PostCard from '../components/PostCard.astro';
+import IdiomCard from '../components/IdiomCard.astro';
 import '../styles/global.css';
 
-const post = await getCollection('post');
+const posts = await getCollection('post');
+
+// Idioms data array
+const idioms = [
+    {
+        id: 1,
+        idiom: "Hit the nail on the head",
+        meaning: "To be exactly right about something",
+        example: "Your analysis hit the nail on the head!",
+        bgColor: "bg-blue-600",
+        textColor: "text-white",
+        size: "large",
+        gridClass: "col-span-2 row-span-2"
+    },
+    {
+        id: 2,
+        idiom: "Break a leg",
+        meaning: "Good luck!",
+        bgColor: "bg-green-600",
+        textColor: "text-white",
+        size: "small",
+        gridClass: "col-span-1 row-span-1"
+    },
+    {
+        id: 3,
+        idiom: "On cloud nine",
+        meaning: "Extremely happy",
+        bgColor: "bg-purple-600",
+        textColor: "text-white",
+        size: "small",
+        gridClass: "col-span-1 row-span-1"
+    },
+    {
+        id: 4,
+        idiom: "Spill the beans",
+        meaning: "To reveal a secret",
+        example: "Don't spill the beans about the surprise!",
+        bgColor: "bg-orange-600",
+        textColor: "text-white",
+        size: "medium",
+        gridClass: "col-span-2 row-span-1"
+    },
+    {
+        id: 5,
+        idiom: "Piece of cake",
+        meaning: "Very easy",
+        bgColor: "bg-pink-600",
+        textColor: "text-white",
+        size: "small",
+        gridClass: "col-span-1 row-span-1"
+    },
+    {
+        id: 6,
+        idiom: "Under the weather",
+        meaning: "Feeling sick",
+        bgColor: "bg-teal-600",
+        textColor: "text-white",
+        size: "small",
+        gridClass: "col-span-1 row-span-1"
+    },
+    {
+        id: 7,
+        idiom: "The ball is in your court",
+        meaning: "It's your decision now",
+        bgColor: "bg-red-600",
+        textColor: "text-white",
+        size: "medium",
+        gridClass: "col-span-2 row-span-1"
+    },
+    
+];
 ---
 
-<Layout title='Learn English'>
-    <header class='flex flex-col items-center pt-10'>
-        <h1 class='text-7xl font-semibold text-center drop-shadow-md'>
-            Welcome to learn <span
-                class='text-transparent font-bold bg-clip-text bg-gradient-to-l from-cyan-500 to-sky-500'
-                >English Blogs</span
-            >!
-        </h1>
-        <p class='p-5 font-semibold text-center'>
-            In this blog you can refresh your knowledge about the level
-        </p>
-    </header>
-    <main>
-        <section>
-            <h2 class='text-2xl font-bold text-white mb-6'>Latest Posts</h2>
-            <div class='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-                {
-                    post.map((post) => {
-                        const { slug, data } = post;
-                        const { title, description, img, tags } = data;
-                        return (
-                            <article class='flex flex-col shadow-lg overflow-hidden'>
-                                <a href={`/post/${slug}`}>
-                                    <img
-                                        class='w-full h-48 object-contain'
-                                        src={`/${img}`}
-                                        alt={title}
-                                        transition:name={`img-${slug}`}
-                                    />
-                                    <div class='p-6 flex flex-col justify-center items-center '>
-                                        <h2
-                                            class='text-2xl md:text-4xl font-bold text-white mb-2'
-                                            transition:name={`title-${slug}`}
-                                        >
-                                            {title}
-                                        </h2>
-                                        <div class='flex flex-wrap gap-2 mb-4'>
-                                            {tags.map((tag: any) => (
-                                                <span class='bg-blue-500 text-white px-3 py-1 rounded-full text-sm'>
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                        <p class='text-gray-300 line-clamp-3 md:line-clamp-none'>
-                                            {description}
-                                        </p>
-                                    </div>
-                                </a>
-                            </article>
-                        );
-                    })
-                }
+<Layout title='Learn English - Master Grammar, Vocabulary & More'>
+    <!-- Hero Section -->
+    <Hero />
+    
+    <!-- Posts Section -->
+    <section id="posts" class="container mx-auto px-6 py-20">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                Latest <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Lessons</span>
+            </h2>
+            <p class="text-xl text-gray-200 max-w-2xl mx-auto">
+                Dive into comprehensive grammar guides and practical examples
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {
+                posts.map((post) => {
+                    const { slug, data } = post;
+                    const { title, description, img, tags } = data;
+                    return (
+                        <PostCard 
+                            slug={slug}
+                            title={title}
+                            description={description}
+                            img={img}
+                            tags={tags}
+                        />
+                    );
+                })
+            }
+        </div>
+    </section>
+    
+    <!-- Idioms Section -->
+    <section id="idioms" class="container mx-auto px-6 py-20">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                Popular <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-400">Idioms</span>
+            </h2>
+            <p class="text-xl text-gray-200 max-w-2xl mx-auto">
+                Learn common English expressions and their meanings
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-4 grid-rows-3 gap-4 h-[400px] max-w-5xl mx-auto">
+            {
+                idioms.map((idiom) => (
+                    <div class={idiom.gridClass}>
+                        <IdiomCard 
+                            idiom={idiom.idiom}
+                            meaning={idiom.meaning}
+                            example={idiom.example}
+                            bgColor={idiom.bgColor}
+                            textColor={idiom.textColor}
+                            size={idiom.size as 'small' | 'medium' | 'large'}
+                        />
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="container mx-auto px-6 py-20">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                Why Choose Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">English Blog</span>?
+            </h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-8 bg-gray-800/80 rounded-2xl border border-gray-600/50">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Comprehensive Lessons</h3>
+                <p class="text-gray-200">Detailed grammar explanations with practical examples and exercises</p>
             </div>
-        </section>
-        <section class='w-full h-100'>
-            <h2 class='text-2xl font-bold text-white mb-6'>Idioms</h2>
-            <div class='h-90 w-full grid grid-cols-5 grid-rows-5 gap-4 p-1.5'>
-                <div class='group bg-squirtle rounded-3xl col-span-2 row-span-5 text-center items-center flex justify-center trasition duration-300 ease-in-out hover:scale-105 hover:translate-y-1-'>
-                    <span class='text-7xl inline-block font-bold rotate-6 text-black group-hover:invisible ease-in-out duration-300'
-                        >Hit the nail on the head</span>
-                    <p class="invisible group-hover:visible">means: </p>
+            
+            <div class="text-center p-8 bg-gray-800/80 rounded-2xl border border-gray-600/50">
+                <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
                 </div>
-                <div class='bg-squirtle-dark col-span-2 rounded-2xl row-span-3 col-start-3 p-1 text-center items-center flex justify-center group-hover:invisible'>
-                    <span class='text-7xl inline-block font-bold rotate-6 text-black'
-                        >break a leg</span>
-                </div>
-                <div class='bg-sky-600 rounded-2xl row-span-5 col-start-5 text-center justify-center'>
-                    <span class='text-7xl inline-block font-bold text-black '>to be on cloud nine</span>
-
-                    </span>
-                </div>
-                <div
-                    class='bg-sky-800 rounded-2xl col-span-2 row-span-2 col-start-3 row-start-4 p-3 text-center items-center flex justify-center hover:transition-all hover:scale-105'
-                >
-                    <span class='text-6xl inline-block font-bold overflow-hidden text-black'> to spill the beans </span>
-                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Interactive Learning</h3>
+                <p class="text-gray-200">Engaging content with visual aids and interactive elements</p>
             </div>
-        </section>
-    </main>
+            
+            <div class="text-center p-8 bg-gray-800/80 rounded-2xl border border-gray-600/50">
+                <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Real-World Usage</h3>
+                <p class="text-gray-200">Learn practical English that you can use in everyday situations</p>
+            </div>
+        </div>
+    </section>
 </Layout>

@@ -2,10 +2,11 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import ArrowBack from '../../components/ArrowBack.astro';
+import QuizGlobal from '../../components/QuizGlobal.astro';
 
 export const getStaticPaths = async () => {
-    const post = await getCollection('post');
-    return post.map((post) => {
+    const posts = await getCollection('post');
+    return posts.map((post) => {
         return {
             params: {
                 id: post.slug,
@@ -19,31 +20,410 @@ export const getStaticPaths = async () => {
 
 const { post } = Astro.props;
 const { data, slug } = post;
-const { title, img, tags } = data;
+const { title, img, tags, description } = data;
 
 const { Content } = await render(post);
 ---
 
-<Layout title={`${slug} - Learn English`}>
-    <div class="max-w-4xl mx-auto items-center" >
-        <div class="flex pb-6 ">
-            <a href="/" class=" flex items-center text-center text-white no-underline"><ArrowBack/> <span class="text-xl">Back</span></a>
-        </div>
-        <div class="flex flex-col md:flex-row mb-6">
-            <img src={`/${img}`} alt={title} class="w-full md:w-48 h-auto rounded-lg mb-4 md:mb-0 md:mr-6" transition:name={`img-${slug}`} />
-            <div class="flex flex-col justify-center">
-                <h1 class="text-3xl md:text-5xl font-bold mb-4 text-center md:text-left" transition:name={`title-${slug}`}>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-t from-cyan-500 to-sky-100">{title}</span>
-                </h1>
-                <div class="flex flex-wrap gap-2 mb-4 md:justify-start">
-                    {tags.map((tag: any) => (
-                        <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm">{tag}</span>
-                    ))}
-                </div>
-            </div>
-        </div>
-        <div class="prose prose-invert prose-xl max-w-none">
-            <Content />
+<Layout
+    title={`${title} - Learn English`}
+    description={description}
+>
+    <!-- Minimal Header -->
+    <div class='bg-white/5 border-b border-gray-700/30'>
+        <div class='container mx-auto px-6 py-6'>
+            <a
+                href='/'
+                class='inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors group'
+            >
+                <ArrowBack />
+                <span class='ml-2 font-medium'>Back to Lessons</span>
+            </a>
         </div>
     </div>
+
+    <!-- Article Layout -->
+    <div class='min-h-screen bg-gradient-to-b from-gray-900 to-gray-800'>
+        <div class='container mx-auto px-6 py-12'>
+            <div class='max-w-4xl mx-auto'>
+                <!-- Article Header -->
+                <header class='mb-12'>
+                    <div class='text-center mb-8'>
+                        <div class='flex flex-wrap gap-2 justify-center mb-4'>
+                            {
+                                tags.map((tag: string) => (
+                                    <span class='px-3 py-1 bg-blue-600/20 border border-blue-500/30 text-blue-300 rounded-full text-sm font-medium'>
+                                        {tag}
+                                    </span>
+                                ))
+                            }
+                        </div>
+
+                        <h1
+                            class='text-3xl md:text-5xl font-bold mb-6 leading-tight text-white'
+                            transition:name={`title-${slug}`}
+                        >
+                            {title}
+                        </h1>
+
+                        <p
+                            class='text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto'
+                        >
+                            {description}
+                        </p>
+                    </div>
+
+                    <!-- Featured Image -->
+                    <div class='relative mb-8'>
+                        <img
+                            src={`/${img}`}
+                            alt={title}
+                            class='w-full h-80 object-cover rounded-xl shadow-2xl'
+                            transition:name={`img-${slug}`}
+                        />
+                        <div
+                            class='absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl'
+                        >
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Article Content -->
+                <div class='grid grid-cols-1 lg:grid-cols-4 gap-8'>
+                    <!-- Main Content -->
+                    <main class='lg:col-span-3'>
+                        <article class='prose prose-invert prose-lg max-w-none'>
+                            <div
+                                class='bg-white/5 backdrop-blur-sm rounded-xl p-8 md:p-10 border border-gray-600/20 shadow-xl'
+                            >
+                                <Content />
+                            </div>
+                        </article>
+
+                        <div class='mt-10'>
+                            <QuizGlobal />
+                            <p
+                                class='mt-6 text-center text-blue-300 font-medium'
+                            >
+                                Press "Take Quiz" to show the quiz.
+                            </p>
+                        </div>
+                    </main>
+
+                    <!-- Sidebar -->
+                    <aside class='lg:col-span-1'>
+                        <div class='sticky top-24 space-y-6'>
+                            <!-- Lesson Info -->
+                            <div
+                                class='bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-sm rounded-2xl p-6 border border-blue-500/20 shadow-lg'
+                            >
+                                <div class='flex items-center mb-4'>
+                                    <div
+                                        class='w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center mr-3'
+                                    >
+                                        <svg
+                                            class='w-5 h-5 text-blue-400'
+                                            fill='none'
+                                            stroke='currentColor'
+                                            viewBox='0 0 24 24'
+                                        >
+                                            <path
+                                                stroke-linecap='round'
+                                                stroke-linejoin='round'
+                                                stroke-width='2'
+                                                d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class='text-lg font-bold text-white'>
+                                        Lesson Info
+                                    </h3>
+                                </div>
+                                <div class='space-y-3'>
+                                    <div
+                                        class='flex items-center justify-between'
+                                    >
+                                        <div class='flex items-center'>
+                                            <svg
+                                                class='w-4 h-4 text-green-400 mr-2'
+                                                fill='none'
+                                                stroke='currentColor'
+                                                viewBox='0 0 24 24'
+                                            >
+                                                <path
+                                                    stroke-linecap='round'
+                                                    stroke-linejoin='round'
+                                                    stroke-width='2'
+                                                    d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
+                                                ></path>
+                                            </svg>
+                                            <span class='text-gray-300 text-sm'
+                                                >Duration</span
+                                            >
+                                        </div>
+                                        <span class='text-white font-semibold'
+                                            >5 min</span
+                                        >
+                                    </div>
+                                    <div
+                                        class='flex items-center justify-between'
+                                    >
+                                        <div class='flex items-center'>
+                                            <svg
+                                                class='w-4 h-4 text-yellow-400 mr-2'
+                                                fill='none'
+                                                stroke='currentColor'
+                                                viewBox='0 0 24 24'
+                                            >
+                                                <path
+                                                    stroke-linecap='round'
+                                                    stroke-linejoin='round'
+                                                    stroke-width='2'
+                                                    d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'
+                                                ></path>
+                                            </svg>
+                                            <span class='text-gray-300 text-sm'
+                                                >Level</span
+                                            >
+                                        </div>
+                                        <span class='text-white font-semibold'
+                                            >Beginner</span
+                                        >
+                                    </div>
+                                    <div
+                                        class='flex items-center justify-between'
+                                    >
+                                        <div class='flex items-center'>
+                                            <svg
+                                                class='w-4 h-4 text-purple-400 mr-2'
+                                                fill='none'
+                                                stroke='currentColor'
+                                                viewBox='0 0 24 24'
+                                            >
+                                                <path
+                                                    stroke-linecap='round'
+                                                    stroke-linejoin='round'
+                                                    stroke-width='2'
+                                                    d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
+                                                ></path>
+                                            </svg>
+                                            <span class='text-gray-300 text-sm'
+                                                >Topic</span
+                                            >
+                                        </div>
+                                        <span class='text-white font-semibold'
+                                            >Grammar</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reading Progress -->
+                            <div
+                                class='bg-gradient-to-br from-green-500/10 to-teal-500/10 backdrop-blur-sm rounded-2xl p-6 border border-green-500/20 shadow-lg'
+                            >
+                                <div class='flex items-center mb-4'>
+                                    <div
+                                        class='w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center mr-3'
+                                    >
+                                        <svg
+                                            class='w-5 h-5 text-green-400'
+                                            fill='none'
+                                            stroke='currentColor'
+                                            viewBox='0 0 24 24'
+                                        >
+                                            <path
+                                                stroke-linecap='round'
+                                                stroke-linejoin='round'
+                                                stroke-width='2'
+                                                d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class='text-lg font-bold text-white'>
+                                        Progress
+                                    </h3>
+                                </div>
+                                <div class='space-y-4'>
+                                    <div
+                                        class='flex justify-between items-center'
+                                    >
+                                        <span class='text-gray-300 font-medium'
+                                            >Reading</span
+                                        >
+                                        <span
+                                            class='text-green-400 font-bold text-lg'
+                                            id='progress-text'
+                                            >0%</span
+                                        >
+                                    </div>
+                                    <div class='relative'>
+                                        <div
+                                            class='w-full bg-gray-700/50 rounded-full h-3 overflow-hidden'
+                                        >
+                                            <div
+                                                class='bg-gradient-to-r from-green-400 to-teal-400 h-3 rounded-full w-0 transition-all duration-500 ease-out shadow-lg'
+                                                id='progress-bar'
+                                            >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class='flex justify-between text-xs text-gray-400'
+                                    >
+                                        <span>Start</span>
+                                        <span>Complete</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div
+                                class='bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20 shadow-lg'
+                            >
+                                <div class='flex items-center mb-4'>
+                                    <div
+                                        class='w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center mr-3'
+                                    >
+                                        <svg
+                                            class='w-5 h-5 text-purple-400'
+                                            fill='none'
+                                            stroke='currentColor'
+                                            viewBox='0 0 24 24'
+                                        >
+                                            <path
+                                                stroke-linecap='round'
+                                                stroke-linejoin='round'
+                                                stroke-width='2'
+                                                d='M13 10V3L4 14h7v7l9-11h-7z'
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class='text-lg font-bold text-white'>
+                                        Actions
+                                    </h3>
+                                </div>
+                                <div class='space-y-3'>
+                                    <button
+                                        id='take-quiz-btn'
+                                        class='group w-full p-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg font-medium'
+                                    >
+                                        <div
+                                            class='flex items-center justify-center'
+                                        >
+                                            <svg
+                                                class='w-5 h-5 mr-2 group-hover:rotate-12 transition-transform'
+                                                fill='none'
+                                                stroke='currentColor'
+                                                viewBox='0 0 24 24'
+                                            >
+                                                <path
+                                                    stroke-linecap='round'
+                                                    stroke-linejoin='round'
+                                                    stroke-width='2'
+                                                    d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'
+                                                ></path>
+                                            </svg>
+                                            Take Quiz
+                                        </div>
+                                    </button>
+                                    <button
+                                        class='group w-full p-4 bg-white/5 hover:bg-white/10 border border-gray-500/30 hover:border-gray-400/50 text-gray-300 hover:text-white rounded-xl transition-all duration-300 transform hover:scale-105 font-medium'
+                                    >
+                                        <div
+                                            class='flex items-center justify-center'
+                                        >
+                                            <svg
+                                                class='w-5 h-5 mr-2 group-hover:scale-110 transition-transform'
+                                                fill='none'
+                                                stroke='currentColor'
+                                                viewBox='0 0 24 24'
+                                            >
+                                                <path
+                                                    stroke-linecap='round'
+                                                    stroke-linejoin='round'
+                                                    stroke-width='2'
+                                                    d='M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z'
+                                                ></path>
+                                            </svg>
+                                            Save Lesson
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                <!-- Navigation Footer -->
+                <footer class='mt-16 pt-8 border-t border-gray-700/50'>
+                    <div
+                        class='flex flex-col md:flex-row justify-between items-center gap-6'
+                    >
+                        <div class='text-center md:text-left'>
+                            <h3 class='text-xl font-bold text-white mb-2'>
+                                Continue Learning
+                            </h3>
+                            <p class='text-gray-300'>
+                                Explore more lessons to improve your English
+                                skills
+                            </p>
+                        </div>
+                        <div class='flex flex-col sm:flex-row gap-3'>
+                            <a
+                                href='/'
+                                class='px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors'
+                            >
+                                More Lessons
+                            </a>
+                            <a
+                                href='/#idioms'
+                                class='px-6 py-3 border border-gray-500 text-gray-300 hover:bg-gray-700 font-medium rounded-lg transition-colors'
+                            >
+                                Learn Idioms
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+
+            if (!progressBar || !progressText) return;
+
+            const scrollTop = window.scrollY;
+            const docHeight =
+                document.documentElement.scrollHeight - window.innerHeight;
+            const progress = Math.min(
+                100,
+                Math.max(0, (scrollTop / docHeight) * 100),
+            );
+
+            progressBar.style.width = progress + '%';
+            progressText.textContent = Math.round(progress) + '%';
+        });
+
+        // Take Quiz button functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const takeQuizBtn = document.getElementById('take-quiz-btn');
+            if (takeQuizBtn) {
+                takeQuizBtn.addEventListener('click', () => {
+                    const quizSections =
+                        document.querySelectorAll('[id^="quiz"]');
+                    quizSections.forEach((quiz) => {
+                        (quiz as HTMLElement).style.display = 'block';
+                        quiz.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center',
+                        });
+                    });
+                });
+            }
+        });
+    </script>
 </Layout>

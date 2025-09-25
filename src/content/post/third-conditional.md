@@ -44,3 +44,41 @@ The third conditional has two clauses:
 ## Practice
 
 Try writing your own sentences using the third conditional. Think about situations in your past and imagine alternative outcomes.
+
+## Final Quiz
+
+<div id="quiz1" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz1', 
+        "What is the structure of the third conditional?",
+        ["If + present, will + infinitive", "If + past simple, would + infinitive", "If + past perfect, would + have + past participle", "If + present perfect, will + have + past participle"],
+        2,
+        "Third conditional uses 'If + past perfect, would/could/might + have + past participle' for hypothetical past situations."
+    );
+});
+</script>
+
+<div id="quiz2" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz2', 
+        "Complete: 'If I _____ harder, I _____ the exam.'",
+        ["study, will pass", "studied, would pass", "had studied, would have passed", "have studied, will have passed"],
+        2,
+        "This is third conditional expressing regret about a past situation that didn't happen."
+    );
+});
+</script>
+
+<div id="quiz3" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz3', 
+        "The third conditional is used to express:",
+        ["Future possibilities", "Present habits", "Past regrets and hypothetical situations", "General truths"],
+        2,
+        "Third conditional expresses regret, criticism, or imaginary outcomes about past situations that didn't happen."
+    );
+});
+</script>

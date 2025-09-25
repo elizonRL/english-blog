@@ -61,3 +61,41 @@ Here are some sentences for you to practice using the past perfect tense:
 ## Conclusion
 
 The past perfect tense is a useful tense for talking about actions that were completed before another action in the past. By understanding the structure and usage of the past perfect tense, you can improve your English grammar skills.
+
+## Final Quiz
+
+<div id="quiz1" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz1', 
+        "What is the structure of the past perfect tense?",
+        ["have + past participle", "had + past participle", "will + have + past participle", "was/were + past participle"],
+        1,
+        "Past perfect uses 'had + past participle' to show an action completed before another past action."
+    );
+});
+</script>
+
+<div id="quiz2" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz2', 
+        "Complete: 'She _____ the movie before we arrived.'",
+        ["has seen", "had seen", "saw", "will have seen"],
+        1,
+        "'Had seen' shows the action was completed before another past action (we arrived)."
+    );
+});
+</script>
+
+<div id="quiz3" style="display: none;"></div>
+<script>
+window.addEventListener('load', () => {
+    window.createQuiz('quiz3', 
+        "Which signal word is commonly used with past perfect?",
+        ["tomorrow", "now", "before", "next week"],
+        2,
+        "'Before' is a common signal word that indicates one action happened prior to another in the past."
+    );
+});
+</script>
