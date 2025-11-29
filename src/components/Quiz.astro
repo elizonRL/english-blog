@@ -1,103 +1,135 @@
 ---
 interface Props {
-    question: string;
-    options: string[];
-    correctAnswer: number;
-    explanation?: string;
+  question: string
+  options: string[]
+  correctAnswer: number
+  explanation?: string
 }
 
-const { question, options, correctAnswer, explanation } = Astro.props;
-const quizId = Math.random().toString(36).substr(2, 9);
+const { question, options, correctAnswer, explanation } = Astro.props
+const quizId = Math.random().toString(36).substr(2, 9)
 ---
 
-<div class="quiz-container bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl p-6 border border-blue-500/20 my-6">
-    <h3 class="text-lg font-bold text-white mb-4 flex items-center">
-        <svg class="w-5 h-5 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-        </svg>
-        Quiz Question
-    </h3>
-    
-    <p class="text-gray-200 mb-6 text-lg leading-relaxed">{question}</p>
-    
-    <div class="space-y-3" data-quiz-id={quizId} data-correct={correctAnswer}>
-        {options.map((option, index) => (
-            <button 
-                class="quiz-option w-full p-4 text-left bg-white/5 hover:bg-white/10 border border-gray-600/30 hover:border-gray-500/50 rounded-xl transition-all duration-300 text-gray-200 hover:text-white"
-                data-option={index}
-            >
-                <div class="flex items-center">
-                    <div class="w-6 h-6 rounded-full border-2 border-gray-400 mr-3 flex items-center justify-center text-sm font-bold">
-                        {String.fromCharCode(65 + index)}
-                    </div>
-                    {option}
-                </div>
-            </button>
-        ))}
-    </div>
-    
-    <div class="quiz-feedback mt-4 p-4 rounded-xl hidden">
-        <div class="feedback-content"></div>
-        {explanation && (
-            <div class="explanation mt-3 p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                <p class="text-sm text-blue-200">
-                    <strong>Explanation:</strong> {explanation}
-                </p>
+<div
+  class='quiz-container bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl p-6 border border-blue-500/20 my-6'
+>
+  <h3 class='text-lg font-bold text-white mb-4 flex items-center'>
+    <svg
+      class='w-5 h-5 mr-2 text-blue-400'
+      fill='none'
+      stroke='currentColor'
+      viewBox='0 0 24 24'
+    >
+      <path
+        stroke-linecap='round'
+        stroke-linejoin='round'
+        stroke-width='2'
+        d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'
+      ></path>
+    </svg>
+    Quiz Question
+  </h3>
+
+  <p class='text-gray-200 mb-6 text-lg leading-relaxed'>{question}</p>
+
+  <div
+    class='space-y-3'
+    data-quiz-id={quizId}
+    data-correct={correctAnswer}
+  >
+    {
+      options.map((option, index) => (
+        <button
+          class='quiz-option w-full p-4 text-left bg-white/5 hover:bg-white/10 border border-gray-600/30 hover:border-gray-500/50 rounded-xl transition-all duration-300 text-gray-200 hover:text-white'
+          data-option={index}
+        >
+          <div class='flex items-center'>
+            <div class='w-6 h-6 rounded-full border-2 border-gray-400 mr-3 flex items-center justify-center text-sm font-bold'>
+              {String.fromCharCode(65 + index)}
             </div>
-        )}
-    </div>
+            {option}
+          </div>
+        </button>
+      ))
+    }
+  </div>
+
+  <div class='quiz-feedback mt-4 p-4 rounded-xl hidden'>
+    <div class='feedback-content'></div>
+    {
+      explanation && (
+        <div class='explanation mt-3 p-3 bg-blue-500/10 rounded-lg border border-blue-500/20'>
+          <p class='text-sm text-blue-200'>
+            <strong>Explanation:</strong> {explanation}
+          </p>
+        </div>
+      )
+    }
+  </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const quizContainers = document.querySelectorAll('.quiz-container');
-    
-    quizContainers.forEach(container => {
-        const options = container.querySelectorAll('.quiz-option');
-        const feedback = container.querySelector('.quiz-feedback');
-        const feedbackContent = container.querySelector('.feedback-content');
-        const correctAnswer = parseInt(container.querySelector('[data-quiz-id]').dataset.correct);
-        let answered = false;
-        
-        options.forEach((option, index) => {
-            option.addEventListener('click', () => {
-                if (answered) return;
-                
-                answered = true;
-                const selectedIndex = parseInt(option.dataset.option);
-                
-                // Disable all options
-                options.forEach(opt => opt.style.pointerEvents = 'none');
-                
-                // Show results
-                options.forEach((opt, idx) => {
-                    const optIndex = parseInt(opt.dataset.option);
-                    if (optIndex === correctAnswer) {
-                        opt.classList.add('bg-green-600/50', 'border-green-500', 'text-green-100');
-                        opt.classList.remove('bg-white/5', 'border-gray-600/30');
-                    } else if (optIndex === selectedIndex) {
-                        opt.classList.add('bg-red-600/50', 'border-red-500', 'text-red-100');
-                        opt.classList.remove('bg-white/5', 'border-gray-600/30');
-                    } else {
-                        opt.classList.add('opacity-50');
-                    }
-                });
-                
-                // Show feedback
-                const isCorrect = selectedIndex === correctAnswer;
-                feedbackContent.innerHTML = isCorrect 
-                    ? '<div class="flex items-center text-green-400"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><strong>Correct!</strong> Well done.</div>'
-                    : '<div class="flex items-center text-red-400"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg><strong>Incorrect.</strong> Try again next time.</div>';
-                
-                feedback.classList.remove('hidden');
-            });
-        });
-    });
-});
+  document.addEventListener('DOMContentLoaded', function () {
+    const quizContainers = document.querySelectorAll('.quiz-container')
+
+    quizContainers.forEach((container) => {
+      const options = container.querySelectorAll('.quiz-option')
+      const feedback = container.querySelector('.quiz-feedback')
+      const feedbackContent = container.querySelector('.feedback-content')
+      const correctAnswer = parseInt(
+        (container.querySelector('[data-quiz-id]') as HTMLElement).dataset.correct || '0'
+      )
+      let answered = false
+
+      options.forEach((option, index) => {
+        option.addEventListener('click', () => {
+          if (answered) return
+
+          answered = true
+          const selectedIndex = parseInt((option as HTMLElement).dataset.option || '0')
+
+          // Disable all options
+          options.forEach((opt) => ((opt as HTMLElement).style.pointerEvents = 'none'))
+
+          // Show results
+          options.forEach((opt, idx) => {
+            const optIndex = parseInt((opt as HTMLElement).dataset.option || '0')
+            if (optIndex === correctAnswer) {
+              opt.classList.add(
+                'bg-green-600/50',
+                'border-green-500',
+                'text-green-100'
+              )
+              opt.classList.remove('bg-white/5', 'border-gray-600/30')
+            } else if (optIndex === selectedIndex) {
+              opt.classList.add(
+                'bg-red-600/50',
+                'border-red-500',
+                'text-red-100'
+              )
+              opt.classList.remove('bg-white/5', 'border-gray-600/30')
+            } else {
+              opt.classList.add('opacity-50')
+            }
+          })
+
+          // Show feedback
+          const isCorrect = selectedIndex === correctAnswer
+          if (feedbackContent) {
+            feedbackContent.innerHTML = isCorrect
+              ? '<div class="flex items-center text-green-400"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><strong>Correct!</strong> Well done.</div>'
+              : '<div class="flex items-center text-red-400"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg><strong>Incorrect.</strong> Try again next time.</div>'
+          }
+
+          if (feedback) feedback.classList.remove('hidden')
+        })
+      })
+    })
+  })
 </script>
 
 <style>
-.quiz-option:hover {
+  .quiz-option:hover {
     transform: translateY(-1px);
-}
+  }
 </style>

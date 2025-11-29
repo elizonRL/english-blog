@@ -390,38 +390,66 @@ const { Content } = await render(post);
     </div>
 
     <script>
+        let quizzesVisible = false;
+        let canTakeQuiz = false;
+        
         window.addEventListener('scroll', () => {
             const progressBar = document.getElementById('progress-bar');
             const progressText = document.getElementById('progress-text');
+            const takeQuizBtn = document.getElementById('take-quiz-btn');
 
-            if (!progressBar || !progressText) return;
+            if (!progressBar || !progressText || !takeQuizBtn) return;
 
             const scrollTop = window.scrollY;
-            const docHeight =
-                document.documentElement.scrollHeight - window.innerHeight;
-            const progress = Math.min(
-                100,
-                Math.max(0, (scrollTop / docHeight) * 100),
-            );
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100));
 
             progressBar.style.width = progress + '%';
             progressText.textContent = Math.round(progress) + '%';
+            
+            // Enable quiz when 80% read
+            if (progress >= 80 && !canTakeQuiz) {
+                canTakeQuiz = true;
+                takeQuizBtn.style.opacity = '1';
+                takeQuizBtn.style.cursor = 'pointer';
+                takeQuizBtn.style.background = 'linear-gradient(to right, #2563eb, #1d4ed8)';
+            } else if (progress < 80 && !quizzesVisible) {
+                takeQuizBtn.style.opacity = '0.5';
+                takeQuizBtn.style.cursor = 'not-allowed';
+                takeQuizBtn.innerHTML = '<div class="flex items-center justify-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Read 80% to unlock</div>';
+            }
         });
 
         // Take Quiz button functionality
         document.addEventListener('DOMContentLoaded', () => {
             const takeQuizBtn = document.getElementById('take-quiz-btn');
+            
             if (takeQuizBtn) {
+                // Initially disable
+                takeQuizBtn.style.opacity = '0.5';
+                takeQuizBtn.style.cursor = 'not-allowed';
+                takeQuizBtn.innerHTML = '<div class="flex items-center justify-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Read 80% to unlock</div>';
+                
                 takeQuizBtn.addEventListener('click', () => {
-                    const quizSections =
-                        document.querySelectorAll('[id^="quiz"]');
-                    quizSections.forEach((quiz) => {
-                        (quiz as HTMLElement).style.display = 'block';
-                        quiz.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center',
+                    if (!canTakeQuiz || quizzesVisible) return;
+                    
+                    quizzesVisible = true;
+                    const quizSections = document.querySelectorAll('[id^="quiz"]');
+                    
+                    if (quizSections.length > 0) {
+                        quizSections.forEach((quiz) => {
+                            (quiz as HTMLElement).style.display = 'block';
                         });
-                    });
+                        
+                        // Scroll to first quiz
+                        setTimeout(() => {
+                            quizSections[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 100);
+                        
+                        // Update button
+                        takeQuizBtn.innerHTML = '<div class="flex items-center justify-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Quiz Active</div>';
+                        takeQuizBtn.style.background = 'linear-gradient(to right, #10b981, #059669)';
+                    }
                 });
             }
         });
