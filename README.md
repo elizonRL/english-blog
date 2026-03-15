@@ -1,48 +1,74 @@
-# Astro Starter Kit: Basics
+# English Blog
 
-```sh
-npm create astro@latest -- --template basics
+Astro-based English learning blog with grammar lessons, idioms, and interactive quizzes.
+
+## 🚀 Quick Start
+
+```bash
+npm install
+npm run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+Open [http://localhost:4321](http://localhost:4321) in your browser.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 📚 Content
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+- **Grammar Lessons**: Modal verbs, conditionals, past perfect, and more
+- **Idioms**: Common English expressions with examples
+- **Interactive Quizzes**: Test your knowledge with built-in quizzes
 
-## 🚀 Project Structure
+## 🛠️ Tech Stack
 
-Inside of your Astro project, you'll see the following folders and files:
+- Astro 5.x
+- Tailwind CSS v4
+- TypeScript
+- Content Collections (Markdown)
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+## 📁 Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── content/
+│   ├── config.ts   # Content collection schemas
+│   └── post/       # Grammar lesson posts
+├── layouts/        # Page layouts
+├── pages/          # Route pages
+└── styles/         # Global styles
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 🔧 Available Commands
 
-## 🧞 Commands
+| Command | Action |
+|---------|--------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run astro check` | Type checking |
 
-All commands are run from the root of the project, from a terminal:
+## 📝 Adding Content
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### New Grammar Lesson
 
-## 👀 Want to learn more?
+Create a new markdown file in `src/content/post/`:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```markdown
+---
+title: Your Lesson Title
+img: your-image.png
+description: Brief description
+tags: ["Grammar", "Topic"]
+---
+
+# Your Lesson
+
+Content here...
+```
+
+### New Idiom
+
+Idioms are defined in `src/content/idiom/` (see content collection schema).
+
+## 📄 License
+
+MIT

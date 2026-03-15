@@ -3,8 +3,20 @@
 ---
 
 <script>
+declare global {
+    interface Window {
+        createQuiz: (containerId: string, question: string, options: string[], correctAnswer: number, explanation?: string) => void;
+    }
+}
+
 // Global quiz functionality
-window.createQuiz = function(containerId, question, options, correctAnswer, explanation) {
+window.createQuiz = function(
+    containerId: string, 
+    question: string, 
+    options: string[], 
+    correctAnswer: number, 
+    explanation?: string
+): void {
     setTimeout(() => {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -21,7 +33,7 @@ window.createQuiz = function(containerId, question, options, correctAnswer, expl
                 <p class="text-gray-200 mb-6 text-lg leading-relaxed">${question}</p>
                 
                 <div class="space-y-3 quiz-options">
-                    ${options.map((option, index) => `
+                    ${options.map((option: string, index: number) => `
                         <button class="quiz-option w-full p-4 text-left bg-white/5 hover:bg-white/10 border border-gray-600/30 hover:border-gray-500/50 rounded-xl transition-all duration-300 text-gray-200 hover:text-white" data-option="${index}">
                             <div class="flex items-center">
                                 <div class="w-6 h-6 rounded-full border-2 border-gray-400 mr-3 flex items-center justify-center text-sm font-bold">
@@ -46,21 +58,21 @@ window.createQuiz = function(containerId, question, options, correctAnswer, expl
             </div>
         `;
         
-        const options_elements = container.querySelectorAll('.quiz-option');
-        const feedback = container.querySelector('.quiz-feedback');
-        const feedbackContent = container.querySelector('.feedback-content');
+        const optionsElements = container.querySelectorAll('.quiz-option') as NodeListOf<HTMLElement>;
+        const feedback = container.querySelector('.quiz-feedback') as HTMLElement | null;
+        const feedbackContent = container.querySelector('.feedback-content') as HTMLElement | null;
         let answered = false;
         
-        options_elements.forEach((option) => {
+        optionsElements.forEach((option) => {
             option.addEventListener('click', () => {
                 if (answered) return;
                 
                 answered = true;
-                const selectedIndex = parseInt(option.dataset.option);
+                const selectedIndex = parseInt(option.dataset.option || '0');
                 
-                options_elements.forEach(opt => {
+                optionsElements.forEach((opt) => {
                     opt.style.pointerEvents = 'none';
-                    const optIndex = parseInt(opt.dataset.option);
+                    const optIndex = parseInt(opt.dataset.option || '0');
                     
                     if (optIndex === correctAnswer) {
                         opt.style.backgroundColor = 'rgba(34, 197, 94, 0.5)';
@@ -76,11 +88,13 @@ window.createQuiz = function(containerId, question, options, correctAnswer, expl
                 });
                 
                 const isCorrect = selectedIndex === correctAnswer;
-                feedbackContent.innerHTML = isCorrect 
-                    ? '<div style="display: flex; align-items: center; color: #4ade80;"><svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><strong>Correct!</strong> Well done.</div>'
-                    : '<div style="display: flex; align-items: center; color: #f87171;"><svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg><strong>Incorrect.</strong> Try again next time.</div>';
+                if (feedbackContent) {
+                    feedbackContent.innerHTML = isCorrect 
+                        ? '<div style="display: flex; align-items: center; color: #4ade80;"><svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><strong>Correct!</strong> Well done.</div>'
+                        : '<div style="display: flex; align-items: center; color: #f87171;"><svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg><strong>Incorrect.</strong> Try again next time.</div>';
+                }
                 
-                feedback.style.display = 'block';
+                if (feedback) feedback.style.display = 'block';
             });
         });
     }, 100);

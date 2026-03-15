@@ -7,76 +7,7 @@ import IdiomCard from '../components/IdiomCard.astro';
 import '../styles/global.css';
 
 const posts = await getCollection('post');
-
-// Idioms data array
-const idioms = [
-    {
-        id: 1,
-        idiom: "Hit the nail on the head",
-        meaning: "To be exactly right about something",
-        example: "Your analysis hit the nail on the head!",
-        bgColor: "bg-blue-600",
-        textColor: "text-white",
-        size: "large",
-        gridClass: "col-span-2 row-span-2"
-    },
-    {
-        id: 2,
-        idiom: "Break a leg",
-        meaning: "Good luck!",
-        bgColor: "bg-green-600",
-        textColor: "text-white",
-        size: "small",
-        gridClass: "col-span-1 row-span-1"
-    },
-    {
-        id: 3,
-        idiom: "On cloud nine",
-        meaning: "Extremely happy",
-        bgColor: "bg-purple-600",
-        textColor: "text-white",
-        size: "small",
-        gridClass: "col-span-1 row-span-1"
-    },
-    {
-        id: 4,
-        idiom: "Spill the beans",
-        meaning: "To reveal a secret",
-        example: "Don't spill the beans about the surprise!",
-        bgColor: "bg-orange-600",
-        textColor: "text-white",
-        size: "medium",
-        gridClass: "col-span-2 row-span-1"
-    },
-    {
-        id: 5,
-        idiom: "Piece of cake",
-        meaning: "Very easy",
-        bgColor: "bg-pink-600",
-        textColor: "text-white",
-        size: "small",
-        gridClass: "col-span-1 row-span-1"
-    },
-    {
-        id: 6,
-        idiom: "Under the weather",
-        meaning: "Feeling sick",
-        bgColor: "bg-teal-600",
-        textColor: "text-white",
-        size: "small",
-        gridClass: "col-span-1 row-span-1"
-    },
-    {
-        id: 7,
-        idiom: "The ball is in your court",
-        meaning: "It's your decision now",
-        bgColor: "bg-red-600",
-        textColor: "text-white",
-        size: "medium",
-        gridClass: "col-span-2 row-span-1"
-    },
-    
-];
+const idioms = await getCollection('idiom');
 ---
 
 <Layout title='Learn English - Master Grammar, Vocabulary & More'>
@@ -126,18 +57,21 @@ const idioms = [
         
         <div class="grid grid-cols-4 grid-rows-3 gap-4 h-[400px] max-w-5xl mx-auto">
             {
-                idioms.map((idiom) => (
-                    <div class={idiom.gridClass}>
-                        <IdiomCard 
-                            idiom={idiom.idiom}
-                            meaning={idiom.meaning}
-                            example={idiom.example}
-                            bgColor={idiom.bgColor}
-                            textColor={idiom.textColor}
-                            size={idiom.size as 'small' | 'medium' | 'large'}
-                        />
-                    </div>
-                ))
+                idioms.map((idiomEntry) => {
+                    const { data } = idiomEntry;
+                    return (
+                        <div class={data.gridClass}>
+                            <IdiomCard 
+                                idiom={data.idiom}
+                                meaning={data.meaning}
+                                example={data.example}
+                                bgColor={data.bgColor}
+                                textColor={data.textColor}
+                                size={data.size}
+                            />
+                        </div>
+                    );
+                })
             }
         </div>
     </section>

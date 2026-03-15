@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { question, options, correctAnswer, explanation } = Astro.props
-const quizId = Math.random().toString(36).substr(2, 9)
+const quizId = Math.random().toString(36).substring(2, 11)
 ---
 
 <div
@@ -81,7 +81,7 @@ const quizId = Math.random().toString(36).substr(2, 9)
       )
       let answered = false
 
-      options.forEach((option, index) => {
+      options.forEach((option) => {
         option.addEventListener('click', () => {
           if (answered) return
 
@@ -92,7 +92,7 @@ const quizId = Math.random().toString(36).substr(2, 9)
           options.forEach((opt) => ((opt as HTMLElement).style.pointerEvents = 'none'))
 
           // Show results
-          options.forEach((opt, idx) => {
+          options.forEach((opt) => {
             const optIndex = parseInt((opt as HTMLElement).dataset.option || '0')
             if (optIndex === correctAnswer) {
               opt.classList.add(

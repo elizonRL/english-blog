@@ -9,4 +9,16 @@ const post = defineCollection({
     })
 })
 
-export const collections = { post }
+const idiom = defineCollection({
+    schema: z.object({
+        idiom: z.string(),
+        meaning: z.string(),
+        example: z.string().optional(),
+        bgColor: z.string(),
+        textColor: z.string(),
+        size: z.enum(["small", "medium", "large"]),
+        gridClass: z.string(),
+    })
+})
+
+export const collections = { post, idiom }
